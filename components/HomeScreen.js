@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView, Dimensions, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import BottomNav from './BottomNav'; // Import the BottomNav component
+import BottomNav from './BottomNav';
 
 const screenWidth = Dimensions.get('window').width;
 
 export default function HomeScreen({ route }) {
   const navigation = useNavigation();
-  const userName = route?.params?.userName ?? 'Guest';
-
+  const initialUserName = route?.params?.userName ?? 'Guest'; // Get the userName from params or fallback to 'Guest'
+  const [userName, setUserName] = useState(initialUserName); // Persist userName in state
   const [avatarSource, setAvatarSource] = useState(null);
 
   const chooseImage = async () => {
@@ -86,7 +86,7 @@ export default function HomeScreen({ route }) {
       </View>
 
       <View style={styles.daysContainer}>
-        {['Mon', 'Tue', 'Wed', 'Thus', 'Fri'].map((day) => (
+        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day) => (
           <View key={day} style={styles.day}>
             <Text style={styles.dayText}>{day}</Text>
           </View>
@@ -110,7 +110,6 @@ export default function HomeScreen({ route }) {
         </TouchableOpacity>
       </View>
 
-      {/* Use the BottomNav component here */}
       <BottomNav />
     </ImageBackground>
   );

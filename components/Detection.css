@@ -1,0 +1,57 @@
+/* Để căn chỉnh trung tâm toàn bộ giao diện */
+.Detection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Tiêu đề chính */
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Nút yêu cầu nhận diện */
+button {
+  padding: 10px 20px;
+  margin: 20px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Danh sách dự đoán */
+ul {
+  list-style: none;
+  padding: 0;
+  width: 300px;
+}
+
+ul li {
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+ul li:hover {
+  transform: scale(1.02);
+  background-color: #e8f0fe;
+}

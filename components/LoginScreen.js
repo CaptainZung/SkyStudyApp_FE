@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform, handleGuestLogin,handleLogin} from 'react-native';
-import { API_URL } from '../scripts/apiConfig'; // Đảm bảo đường dẫn đúng với vị trí file apiConfig.js
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from 'react-native';
+import { API_URL } from '../scripts/apiConfig';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Handle regular login
   const handleLogin = async () => {
-    if (username && password) {
+    if (username.trim() && password.trim()) {
       try {
         const response = await fetch(API_URL, {
           method: 'POST',
@@ -21,34 +32,42 @@ export default function LoginScreen({ navigation }) {
           const data = await response.json();
           navigation.navigate('Home', { userName: username });
         } else {
-          alert('Đăng nhập thất bại. Vui lòng kiểm tra lại tài khoản và mật khẩu.');
+          Alert.alert('Login Failed', 'Invalid username or password. Please try again.');
         }
       } catch (error) {
-        alert('Có lỗi xảy ra khi kết nối với server. Vui lòng thử lại.');
+        Alert.alert('Error', 'Unable to connect to the server. Please try again later.');
       }
     } else {
-      alert('Vui lòng nhập đầy đủ tài khoản và mật khẩu.');
+      Alert.alert('Missing Information', 'Please enter both username and password.');
     }
   };
 
+  // Handle guest login
+  const handleGuestLogin = () => {
+    navigation.navigate('NameInput'); // Navigate to NameInput screen for entering a guest name
+  };
+
   return (
-    <ImageBackground 
-      source={require('../assets/images/anhnen.jpg')} 
+    <ImageBackground
+      source={require('../assets/images/anhnen.jpg')}
       style={styles.backgroundImage}
     >
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <Text style={styles.title}>SkyStudy</Text>
 
         <TextInput
           style={styles.input}
-          placeholder="Nhập tài khoản"
+          placeholder="Enter username"
           value={username}
           onChangeText={setUsername}
           placeholderTextColor="gray"
         />
         <TextInput
           style={styles.input}
-          placeholder="Nhập mật khẩu"
+          placeholder="Enter password"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -56,7 +75,7 @@ export default function LoginScreen({ navigation }) {
         />
 
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>ĐĂNG NHẬP</Text>
+          <Text style={styles.buttonText}>Đăng Nhập</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleGuestLogin}>
@@ -64,8 +83,11 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
       </KeyboardAvoidingView>
 
-      <TouchableOpacity style={styles.signUpTextContainer} onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.signUpText}>Tạo Tài Khoản Mới</Text>
+      <TouchableOpacity
+        style={styles.signUpTextContainer}
+        onPress={() => navigation.navigate('SignUp')}
+      >
+        <Text style={styles.signUpText}>Tạo tài khoản mới</Text>
       </TouchableOpacity>
     </ImageBackground>
   );
